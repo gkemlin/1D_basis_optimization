@@ -12,7 +12,7 @@ Julia 1.7 with the libraries:
 
 This code runs the computations to perform the numerical experiments from [1].
 Each section with numerical results is associated with a `.jl` file. Run it with
-`include("file.jl")` to run the simulations from the associated section.
+`include("file.jl")` to perform the simulations for the associated section.
 It automatically saves results in the associated folder, in `.json` files.
 Each folder contains a file `plot_results.jl` which generates `.pdf` files from
 the data in the folder.
@@ -21,7 +21,7 @@ the data in the folder.
 - `optimize_basis.jl` runs simulations from Section 4.1.
 - `optimize_basis_random_start.jl` runs simulations from Section 4.2.1.
 - `optimize_basis_extrapolate_a.jl` runs simulations from Section 4.2.2.
-- `optimize_basis_N5.jl` runs simulations from Section 4.2.3.
+- `optimize_basis_compare_sampling.jl` runs simulations from Section 4.2.3.
 - `optimize_basis_N5.jl` runs simulations from Section 4.2.4.
 
 # Contact
