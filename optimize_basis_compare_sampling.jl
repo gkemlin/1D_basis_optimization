@@ -3,16 +3,17 @@
 
 include("include_common.jl")
 
-# Global parameters
-
+# PDE parameters
+Nb = 3
+N = 10;         # Number of L2 basis functions to compute our basis functions
 Ng = 2001;      # FD grid size inside box
 box_size = 20   # Box larger than I
 x_range, δx = discretize_space(Ng, box_size)
+tol = 1e-7
 
+# Criterion optimization
 A_L2 = Diagonal(ones(Ng))
 A_H1 = A_L2 .- (1/δx^2)*Δ(Ng)
-
-# Choose criterion
 function build_optim_basis_K(Nb, offline_data, A)
 
     @info "Optimizing basis for criterion K with $(2Nb) basis"
@@ -25,7 +26,7 @@ function build_optim_basis_K(Nb, offline_data, A)
     res = optimize(R -> f(R), (g, R) -> ∇f!(g, R),
                    Rstart, LBFGS(manifold=Stiefel()),
                    Optim.Options(show_trace=true,
-                                 g_tol=tol, iterations=500));
+                                g_tol=tol, iterations=500));
 
     res.minimizer
 end
@@ -49,41 +50,16 @@ function build_optim_basis_L(Nb, offline_data)
     res.minimizer
 end
 
-# Choose criterion by defining offline computation, basis build and A.
-offline_computations(sample, N, Ng, (x_range,  δx), A) =
-    run_offline_computations_L(sample, N, Ng, (x_range, δx))
-build_optim_basis(Nb, offline_data, A) = build_optim_basis_L(Nb, offline_data)
-A = A_L2
-
 # Output dir
 ref_dir = "optimization_results_compare_sampling"
 for (i, dir) in enumerate(["Crit1_L2", "Crit1_H1", "Crit2"])
-    output_dir = joinpath("ref_dir", dir)
+    output_dir = joinpath(ref_dir, dir)
     (!isdir(output_dir)) && (mkdir(output_dir))
 
-    if i == 1 # crit1 L^2
-        offline_computations(sample, N, Ng, (x_range,  δx), A) = run_offline_computations_K(sample, N, Ng, (x_range, δx))
-        build_optim_basis(Nb, offline_data, A) = build_optim_basis_K(Nb, offline_data)
-        A = A_L2
-    elseif i == 2 # crit1 H^1
-        offline_computations(sample, N, Ng, (x_range,  δx), A) = run_offline_computations_K(sample, N, Ng, (x_range, δx))
-        build_optim_basis(Nb, offline_data, A) = build_optim_basis_K(Nb, offline_data)
-        A = A_H1
-    else # crit2
-        offline_computations(sample, N, Ng, (x_range,  δx), A) = run_offline_computations_L(sample, N, Ng, (x_range, δx))
-        build_optim_basis(Nb, offline_data, A) = build_optim_basis_L(Nb, offline_data)
-        A = A_L2
-    end
-
     if !isfile("$(output_dir)/λ_ref.json")
-        # PDE parameters
-        Nb = 3
-        N = 10;         # Number of L2 basis functions to compute our basis functions
-
         # "a-sampling" parameters
         α = 1.5; β = 5
         Ns_ext = 100
-        tol = 1e-7
 
         # range of a for the optimization
         a_sample_list = [[1.5,5], [1.5, 2.5], [2.5]]
@@ -104,9 +80,6 @@ for (i, dir) in enumerate(["Crit1_L2", "Crit1_H1", "Crit2"])
         # compute reference solution for a larger range a_sample_ext
         λs, us = exact_solution_all_a(a_sample_ext, Ng, (x_range, δx))
 
-        # Compute offline data for wanted_criterium
-        offline_data_ext = offline_computations(a_sample_ext, N, Ng, (x_range, δx), A)
-
         # postprocess and save results
         λs_OB = Dict{Int64, Dict{Float64, Vector{Float64}}}()
         us_OB = Dict{Int64, Dict{Float64, Matrix{Float64}}}()
@@ -122,11 +95,19 @@ for (i, dir) in enumerate(["Crit1_L2", "Crit1_H1", "Crit2"])
 
         # generate variational solutions for different basis sets
         for (ia_sample, a_sample) in enumerate(a_sample_list)
-            offline_data = offline_computations(a_sample, N, Ng, (x_range, δx), A)
-
-            # Launch optimization
-            R_opti= build_optim_basis(Nb, offline_data, A)
-            R_HB  = R_init(N, Nb)
+            if i == 1 # crit1 L^2
+                A = A_L2
+                offline_data = run_offline_computations_K(a_sample, N, Ng, (x_range, δx); A)
+                R_opti = build_optim_basis_K(Nb, offline_data, A)
+            elseif i == 2 # crit1 H^1
+                A = A_H1
+                offline_data = run_offline_computations_K(a_sample, N, Ng, (x_range, δx); A)
+                R_opti = build_optim_basis_K(Nb, offline_data, A)
+            else # crit2
+                A = A_L2
+                offline_data = run_offline_computations_L(a_sample, N, Ng, (x_range, δx))
+                R_opti = build_optim_basis_L(Nb, offline_data)
+            end
 
             # save results anq QOI
             λs_OB_d = Dict{Float64, Vector{Float64}}()
@@ -138,8 +119,6 @@ for (i, dir) in enumerate(["Crit1_L2", "Crit1_H1", "Crit2"])
             cond_S_OB_d = Dict{Float64, Float64}()
             cond_S_HB_d   = Dict{Float64, Float64}()
 
-            crit_OB_d = Dict{String, Float64}()
-            crit_HB_d   = Dict{String, Float64}()
             for a in a_sample_ext
                 HB = local_hermite_basis(a, Nb, x_range, δx)
 
@@ -174,18 +153,16 @@ for (i, dir) in enumerate(["Crit1_L2", "Crit1_H1", "Crit2"])
             end
             λs_OB[ia_sample]     = λs_OB_d
             us_OB[ia_sample]     = us_OB_d
-            crit_OB[ia_sample]   = crit_OB_d
             cond_S_OB[ia_sample] = cond_S_OB_d
 
             λs_HB[ia_sample]       = λs_HB_d
             us_HB[ia_sample]       = us_HB_d
-            crit_HB[ia_sample]     = crit_HB_d
             cond_S_HB[ia_sample]   = cond_S_HB_d
 
             # centered basis functions
             big_HB = global_hermite_basis(N, x_range, δx)
             HB_dict[ia_sample]     = big_HB
-            OB_dict[ia_sample] = big_HB*R_opti
+            OB_dict[ia_sample]     = big_HB*R_opti
         end
         # save results
         open(io -> JSON3.write(io, data,          allow_inf=true), "$(output_dir)/data.json", "w")
