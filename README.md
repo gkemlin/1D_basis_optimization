@@ -11,7 +11,9 @@ Julia 1.7 with the libraries:
 # Usage
 
 This code runs the computations to perform the numerical experiments from [1].
-Each section with numerical results is associated with a `.jl` file. Run it with
+Each section with numerical results is associated with a `.jl` file.
+Run all the computations at once with `include("run_all_computations.jl")`.
+You can also run computations for each section individually by
 `include("file.jl")` to perform the simulations for the associated section.
 It automatically saves results in the associated folder, in `.json` files.
 Each folder contains a file `plot_results.jl` which generates `.pdf` files from
