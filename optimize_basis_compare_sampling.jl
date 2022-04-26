@@ -182,3 +182,8 @@ for (i, dir) in enumerate(["Crit1_L2", "Crit1_H1", "Crit2"])
         open(io -> JSON3.write(io, cond_S_HB,     allow_inf=true), "$(output_dir)/cond_S_HB.json", "w")
     end
 end
+
+# run plots
+cd("$(ref_dir)/")
+include("$(ref_dir)/plot_results.jl")
+cd("../")

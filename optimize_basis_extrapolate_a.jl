@@ -294,3 +294,8 @@ if !isfile("$(output_dir)/λ_ref.json")
     open(io -> JSON3.write(io, crit_HB,       allow_inf=true), "$(output_dir)/crit_HB.json", "w")
     open(io -> JSON3.write(io, cond_S_HB,     allow_inf=true), "$(output_dir)/cond_S_HB.json", "w")
 end
+
+# run plots
+cd("$(output_dir)/")
+include("$(output_dir)/plot_results.jl")
+cd("../")

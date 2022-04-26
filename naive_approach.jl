@@ -5,7 +5,10 @@
 
 include("include_common.jl")
 
-if !isfile("naive_results/λ_ref.json")
+output_dir="naive_results"
+(!isdir(output_dir)) && (mkdir(output_dir))
+
+if !isfile("$(output_dir)/λ_ref.json")
     data = Dict{String, Any}()
     # PDE parameters
     Nb_list = [1,3]
@@ -90,3 +93,7 @@ if !isfile("naive_results/λ_ref.json")
     open(io -> JSON3.write(io, cond_S_LB, allow_inf=true), "naive_results/cond_S_LB.json", "w")
 end
 
+# run plots
+cd("$(output_dir)/")
+include("$(output_dir)/plot_results.jl")
+cd("../")
