@@ -11,8 +11,8 @@ Julia 1.7 with the libraries:
 # Usage
 This code runs the computations to perform the numerical experiments from [1].
 Each section with numerical results is associated with a `.jl` file which runs
-the computations, save them in the associated folder (in `.json` files)
-and then automatically plot the results in these folders (in `.pdf` files).
+the computations, saves them in the associated folder (in `.json` files)
+and then automatically plots the results in these folders (in `.pdf` files).
 
 To perform the computations, first run
 ```
