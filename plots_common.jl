@@ -4,6 +4,8 @@ using JSON3
 using LinearAlgebra
 using DataFrames
 
+pushPGFPlotsPreamble("\\usepackage{amsmath}")
+
 # colors for plots
 define_color("myred",    [228,26,28])
 define_color("myblue",   [55,124,184])

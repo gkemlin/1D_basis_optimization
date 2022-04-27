@@ -97,24 +97,24 @@ for Nb in Nb_list
     g = GroupPlot(1, 2, groupStyle="vertical sep = 2cm")
     p = [Plots.Linear(a_sample, E, legendentry=L"{\rm reference}",
                       mark="none", style="thick, myred"),
-         Plots.Linear(a_sample, E_OB_KL2, legendentry=latexstring("{\\rm crit 1}\\ L^2"),
+         Plots.Linear(a_sample, E_OB_KL2, legendentry=latexstring("L^2\\text{-OBS}"),
                       mark="none", style="thick, dashed, myblue"),
-         Plots.Linear(a_sample, E_OB_KH1, legendentry=latexstring("{\\rm crit 1}\\ H^1"),
+         Plots.Linear(a_sample, E_OB_KH1, legendentry=latexstring("H^1\\text{-OBS}"),
                       mark="none", style="thick, dash dot dot, myviolet"),
-         Plots.Linear(a_sample, E_OB_L, legendentry=latexstring("{\\rm crit 2}"),
+         Plots.Linear(a_sample, E_OB_L, legendentry=latexstring("\\text{E-OBS}"),
                       mark="none", style="thick, dotted, mygreen"),
-         Plots.Linear(a_sample, E_HB, legendentry=latexstring("{\\rm hermite}"),
+         Plots.Linear(a_sample, E_HB, legendentry=latexstring("\\text{HBS}"),
                       mark="none", style="thick, dash dot, myorange")]
     push!(g, Axis(p, title=latexstring("N_b=$(2Nb)"),
                   xlabel=L"$a$", ylabel=L"\rm energy",
                   legendStyle="at={(0.95,0.05)}, anchor=south east"))
-    p = [Plots.Linear(a_sample, E_OB_KL2.-E, legendentry=latexstring("{\\rm crit 1}\\ L^2"),
+    p = [Plots.Linear(a_sample, E_OB_KL2.-E, legendentry=latexstring("L^2\\text{-OBS}"),
                       mark="none", style="thick, dashed, myblue"),
-         Plots.Linear(a_sample, E_OB_KH1.-E, legendentry=latexstring("{\\rm crit 1}\\ H^1"),
+         Plots.Linear(a_sample, E_OB_KH1.-E, legendentry=latexstring("H^1\\text{-OBS}"),
                       mark="none", style="thick, dash dot dot, myviolet"),
-         Plots.Linear(a_sample, E_OB_L.-E, legendentry=latexstring("{\\rm crit 2}"),
+         Plots.Linear(a_sample, E_OB_L.-E, legendentry=latexstring("\\text{E-OBS}"),
                       mark="none", style="thick, dotted, mygreen"),
-         Plots.Linear(a_sample, E_HB.-E, legendentry=latexstring("{\\rm hermite}"),
+         Plots.Linear(a_sample, E_HB.-E, legendentry=latexstring("\\text{HBS}"),
                       mark="none", style="thick, dash dot, myorange")]
     push!(g, Axis(p, title=latexstring("N_b=$(2Nb)"),
                   xlabel=L"$a$",
@@ -146,13 +146,13 @@ for Nb in Nb_list
 
     p = [Plots.Linear(x_range, ρs[id], legendentry=L"{\rm reference}",
                       mark="none", style="thick, myred"),
-         Plots.Linear(x_range, ρs_OB_KL2[id], legendentry=latexstring("{\\rm crit 1}\\ L^2"),
+         Plots.Linear(x_range, ρs_OB_KL2[id], legendentry=latexstring("L^2\\text{-OBS}"),
                       mark="none", style="thick, dashed, myblue"),
-         Plots.Linear(x_range, ρs_OB_KH1[id], legendentry=latexstring("{\\rm crit 1}\\ H^1"),
+         Plots.Linear(x_range, ρs_OB_KH1[id], legendentry=latexstring("H^1\\text{-OBS}"),
                       mark="none", style="thick, dash dot dot, myviolet"),
-         Plots.Linear(x_range, ρs_OB_L[id], legendentry=latexstring("{\\rm crit 2}"),
+         Plots.Linear(x_range, ρs_OB_L[id], legendentry=latexstring("\\text{E-OBS}"),
                       mark="none", style="thick, dotted, mygreen"),
-         Plots.Linear(x_range, ρs_HB[id], legendentry=latexstring("{\\rm hermite}"),
+         Plots.Linear(x_range, ρs_HB[id], legendentry=latexstring("\\text{HBS}"),
                       mark="none", style="thick, dash dot, myorange")]
     g = Axis(p, title=latexstring("a=$(round(a_sample[Int(end/2)]; digits=2)), N_b=$(2Nb)"),
              xlabel=L"$x$", xmin=-10, xmax=10,
@@ -166,13 +166,13 @@ for Nb in Nb_list
     err_OB_KH1 = sum.([δx .* abs.(ρ - ρs_OB_KH1[i]) for (i,ρ) in enumerate(ρs)])
     err_OB_L   = sum.([δx .* abs.(ρ - ρs_OB_L[i]) for (i,ρ) in enumerate(ρs)])
     err_HB     = sum.([δx .* abs.(ρ - ρs_HB[i]) for (i,ρ) in enumerate(ρs)])
-    p = [Plots.Linear(a_sample, err_OB_KL2, legendentry=latexstring("{\\rm crit 1}\\ L^2"),
+    p = [Plots.Linear(a_sample, err_OB_KL2, legendentry=latexstring("L^2\\text{-OBS}"),
                       mark="none", style="thick, dashed, myblue"),
-         Plots.Linear(a_sample, err_OB_KH1, legendentry=latexstring("{\\rm crit 1}\\ H^1"),
+         Plots.Linear(a_sample, err_OB_KH1, legendentry=latexstring("H^1\\text{-OBS}"),
                       mark="none", style="thick, dash dot dot, myviolet"),
-         Plots.Linear(a_sample, err_OB_L, legendentry=latexstring("{\\rm crit 2}"),
+         Plots.Linear(a_sample, err_OB_L, legendentry=latexstring("\\text{E-OBS}"),
                       mark="none", style="thick, dotted, mygreen"),
-         Plots.Linear(a_sample, err_HB, legendentry=latexstring("{\\rm hermite}"),
+         Plots.Linear(a_sample, err_HB, legendentry=latexstring("\\text{HBS}"),
                       mark="none", style="thick, dash dot, myorange")]
     push!(g, Axis(p, title=latexstring("N_b=$(2Nb)"),
                   xlabel=L"$a$",
@@ -190,13 +190,13 @@ for Nb in Nb_list
                              for (i,ρ) in enumerate(ρs)]))
     err_HB     = sqrt.(sum.([δx .* (ρ - ρs_HB[i]) .* (A_H1 * (ρ - ρs_HB[i]))
                              for (i,ρ) in enumerate(ρs)]))
-    p = [Plots.Linear(a_sample, err_OB_KL2, legendentry=latexstring("{\\rm crit 1}\\ L^2"),
+    p = [Plots.Linear(a_sample, err_OB_KL2, legendentry=latexstring("L^2\\text{-OBS}"),
                       mark="none", style="thick, dashed, myblue"),
-         Plots.Linear(a_sample, err_OB_KH1, legendentry=latexstring("{\\rm crit 1}\\ H^1"),
+         Plots.Linear(a_sample, err_OB_KH1, legendentry=latexstring("H^1\\text{-OBS}"),
                       mark="none", style="thick, dash dot dot, myviolet"),
-         Plots.Linear(a_sample, err_OB_L, legendentry=latexstring("{\\rm crit 2}"),
+         Plots.Linear(a_sample, err_OB_L, legendentry=latexstring("\\text{E-OBS}"),
                       mark="none", style="thick, dotted, mygreen"),
-         Plots.Linear(a_sample, err_HB, legendentry=latexstring("{\\rm hermite}"),
+         Plots.Linear(a_sample, err_HB, legendentry=latexstring("\\text{HBS}"),
                       mark="none", style="thick, dash dot, myorange")]
     push!(g, Axis(p, title=latexstring("N_b=$(2Nb)"),
                   xlabel=L"$a$",
@@ -213,13 +213,13 @@ for Nb in Nb_list
                                   for (i,ρ) in enumerate(ρs)])))
     err_HB     = sqrt.(abs.(sum.([δx .* (D*sqrt.(ρ) - D*sqrt.(ρs_HB[i])).^2
                                   for (i,ρ) in enumerate(ρs)])))
-    p = [Plots.Linear(a_sample, err_OB_KL2, legendentry=latexstring("{\\rm crit 1}\\ L^2"),
+    p = [Plots.Linear(a_sample, err_OB_KL2, legendentry=latexstring("L^2\\text{-OBS}"),
                       mark="none", style="thick, dashed, myblue"),
-         Plots.Linear(a_sample, err_OB_KH1, legendentry=latexstring("{\\rm crit 1}\\ H^1"),
+         Plots.Linear(a_sample, err_OB_KH1, legendentry=latexstring("H^1\\text{-OBS}"),
                       mark="none", style="thick, dash dot dot, myviolet"),
-         Plots.Linear(a_sample, err_OB_L, legendentry=latexstring("{\\rm crit 2}"),
+         Plots.Linear(a_sample, err_OB_L, legendentry=latexstring("\\text{E-OBS}"),
                       mark="none", style="thick, dotted, mygreen"),
-         Plots.Linear(a_sample, err_HB, legendentry=latexstring("{\\rm hermite}"),
+         Plots.Linear(a_sample, err_HB, legendentry=latexstring("\\text{HBS}"),
                       mark="none", style="thick, dash dot, myorange")]
     push!(g, Axis(p, title=latexstring("N_b=$(2Nb)"),
                   xlabel=L"$a$",
@@ -242,13 +242,13 @@ for Nb in Nb_list
     display(δx*OB_L_Nb'OB_L_Nb)
     display(δx*HB_Nb'HB_Nb)
     for μ in 1:Nb
-        p = [Plots.Linear(x_range, OB_KL2_Nb[:,μ], legendentry=latexstring("{\\rm crit 1}\\ L^2"),
+        p = [Plots.Linear(x_range, OB_KL2_Nb[:,μ], legendentry=latexstring("L^2\\text{-OBS}"),
                           mark="none", style="thick, dashed, myblue"),
-             Plots.Linear(x_range, OB_KH1_Nb[:,μ], legendentry=latexstring("{\\rm crit 1}\\ H^1"),
+             Plots.Linear(x_range, OB_KH1_Nb[:,μ], legendentry=latexstring("H^1\\text{-OBS}"),
                           mark="none", style="thick, dash dot dot, myviolet"),
-             Plots.Linear(x_range, OB_L_Nb[:,μ], legendentry=latexstring("{\\rm crit 2}"),
+             Plots.Linear(x_range, OB_L_Nb[:,μ], legendentry=latexstring("\\text{E-OBS}"),
                           mark="none", style="thick, dotted, mygreen"),
-             Plots.Linear(x_range, HB_Nb[:,μ], legendentry=L"{\rm hermite}",
+             Plots.Linear(x_range, HB_Nb[:,μ], legendentry=L"{\rm HBS}",
                           mark="none", style="thick, dash dot, orange")]
         g = Axis(p, title=latexstring("\\mu=$(μ)"),
                  xlabel=L"$x$", xmin=-10, xmax=10,

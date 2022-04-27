@@ -7,7 +7,7 @@ refdir = pwd()
 g_energy  = GroupPlot(3, 1, groupStyle="horizontal sep = 2cm, vertical sep = 1.75cm")
 g_density = GroupPlot(3, 1, groupStyle="horizontal sep = 2cm, vertical sep = 1.75cm")
 
-crit_list = [L"{\rm crit1}\ H^1", L"{\rm crit1}\ L^2", L"{\rm crit2}"]
+crit_list = [L"H^1{\rm-OBS}", L"L^2{\rm-OBS}", L"{\rm E-OBS}"]
 
 for (i, dir) in enumerate(filter(d -> isdir(d), readdir()))
 
@@ -40,7 +40,7 @@ for (i, dir) in enumerate(filter(d -> isdir(d), readdir()))
             for (ia_sample, a_sample) in enumerate(a_sample_list)]
     E_HB = [sum(λs_HB[1][a]) for a in a_sample_ext]
 
-    p = [Plots.Linear(a_sample_ext, E_HB .-E, legendentry=latexstring("{\\rm hermite}"),
+    p = [Plots.Linear(a_sample_ext, E_HB .-E, legendentry=latexstring("\\text{HBS}"),
                       mark="none", style="thick, myorange"),
          Plots.Linear(a_sample_ext, E_OB[1] .- E, legendentry=latexstring("a \\in \\{1.5,5\\}"),
                       mark="none", style="thick, dashed, myblue"),
@@ -76,7 +76,7 @@ for (i, dir) in enumerate(filter(d -> isdir(d), readdir()))
     err_HB = sum.([δx .* abs.(ρ - ρs_HB[i]) for (i,ρ) in enumerate(ρs)])
     err_OB = [sum.([δx .* abs.(ρ - ρs_OB[ia][i]) for (i,ρ) in enumerate(ρs)]) for ia in 1:3]
 
-    p = [Plots.Linear(a_sample_ext, err_HB, legendentry=latexstring("{\\rm hermite}"),
+    p = [Plots.Linear(a_sample_ext, err_HB, legendentry=latexstring("\\text{HBS}"),
                       mark="none", style="thick, myorange"),
          Plots.Linear(a_sample_ext, err_OB[1], legendentry=latexstring("a \\in\\{1.5,5\\}"),
                       mark="none", style="thick, dashed, myblue"),
