@@ -7,7 +7,7 @@ refdir = pwd()
 g_energy  = GroupPlot(3, 1, groupStyle="horizontal sep = 2cm, vertical sep = 1.75cm")
 g_density = GroupPlot(3, 1, groupStyle="horizontal sep = 2cm, vertical sep = 1.75cm")
 
-crit_list = [L"H^1{\rm-OBS}", L"L^2{\rm-OBS}", L"{\rm E-OBS}"]
+crit_list = [L"H^1\text{-OBS}", L"L^2\text{-OBS}", L"\text{ E-OBS}"]
 
 for (i, dir) in enumerate(filter(d -> isdir(d), readdir()))
 
