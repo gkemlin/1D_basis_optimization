@@ -14,8 +14,8 @@ Each section with numerical results is associated with a `.jl` file which runs
 the computations, saves them in the associated folder (in `.json` files)
 and then automatically plots the results in these folders (in `.pdf` files).
 
-To perform the computations, first open the Julia shell with `julia --project`
-and then run
+To perform the computations, first open the Julia shell with `julia --project` 
+from the location of this repository and then run
 ```
 using Pkg
 Pkg.instantiate()
