@@ -17,16 +17,16 @@ us_LB = open(JSON3.read, "u_LB.json")
 
 cond_S_LB = open(JSON3.read, "cond_S_LB.json")
 
-g_cond = Axis(xlabel=L"$a$",
+g_cond = Axis(xlabel=L"$a$", xmode="log",
               ylabel=L"\rm conditioning", ymode="log",
               legendStyle="at={(0.95,0.95)}, anchor=north east")
-style_list = ["thick, dashed, myblue",
-              "thick, dotted, mygreen"]
+style_list = ["thick, dashed, myblue", "thick, dotted, mygreen",
+              "thick, dash dot, myorange", "thick, dash dot dot, myviolet"]
 for (i,Nb) in enumerate(Nb_list)
     style = style_list[i]
     # conditioning
     cond_S = [cond_S_LB[Nb][a] for a in a_sample]
-    push!(g_cond, Plots.Linear(a_sample, cond_S, legendentry=latexstring("N_b=$(2Nb)"),
+    push!(g_cond, Plots.Linear(a_sample, cond_S, legendentry=latexstring("N_b=$(Nb)"),
                                mark="none", style=style))
 end
 cond_1 = [1.0 for a in a_sample]
@@ -69,7 +69,7 @@ p = [Plots.Linear(a_sample, E, legendentry=L"{\rm reference}",
                   mark="none", style="thick, myred")]
 for (i, Nb) in enumerate(Nb_list)
     push!(p, Plots.Linear(a_sample, E_LB[i], legendentry=latexstring("{\\rm HBS:\\;}N_b=$(Nb)"),
-                  mark="none", style="thick, $(linestyles[i]), $(mycolors[i+1])"))
+                          mark="none", style=style_list[i]))
 end
 push!(g, Axis(p; title=latexstring(" "),
               xlabel=L"$a$", ylabel=L"\rm energy", ymin=0.5, ymax=2.5,
@@ -77,7 +77,7 @@ push!(g, Axis(p; title=latexstring(" "),
 # Plot errors on dissociation curves
 p = [Plots.Linear(a_sample, E_LB[i] .- E,
                   legendentry=latexstring("{\\rm HBS:\\;}N_b=$(Nb)"),
-                  mark="none", style="thick,  $(linestyles[i]),  $(mycolors[i+1])")
+                  mark="none", style=style_list[i])
      for (i, Nb) in enumerate(Nb_list)]
 push!(g, Axis(p; title=latexstring(" "),
               xlabel=L"$a$",
@@ -93,7 +93,7 @@ p = [Plots.Linear(x_range, ρs[id], legendentry=L"{\rm reference}",
 for (i, Nb) in enumerate(Nb_list)
     push!(p, Plots.Linear(x_range, ρs_LB[i][id],
                  legendentry=latexstring("{\\rm HBS:\\;}N_b=$(Nb)"),
-                 mark="none", style="thick,  $(linestyles[i]),  $(mycolors[i+1])"))
+                 mark="none", style=style_list[i]))
 end
 push!(g, Axis(p, title=latexstring("a=$(round(a_sample[Int(end/2)]; digits=2))"),
               xlabel=L"$x$", xmin=-10, xmax=10,
@@ -101,8 +101,7 @@ push!(g, Axis(p, title=latexstring("a=$(round(a_sample[Int(end/2)]; digits=2))")
               legendStyle="at={(0.05,0.95)}, anchor=north west"))
 p = [Plots.Linear(a_sample, err_LB[i],
                   legendentry=latexstring("{\\rm HBS:\\;}N_b=$(Nb)"),
-                  mark="none",
-                  style="thick,  $(linestyles[i]),  $(mycolors[i+1])")
+                  mark="none", style=style_list[i])
      for (i, Nb) in enumerate(Nb_list)]
 push!(g, Axis(p, title=" ",
               xlabel=L"$a$",

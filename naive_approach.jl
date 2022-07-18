@@ -10,7 +10,7 @@ output_dir="naive_results"
 if !isfile("$(output_dir)/λ_ref.json")
     data = Dict{String, Any}()
     # PDE parameters
-    Nb_list = [1,3]
+    Nb_list = [1,2,3,4]
     Ng = 2001       # FD grid size inside box
     box_size = 20   # Box larger than I
 

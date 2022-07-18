@@ -70,13 +70,13 @@ for (i,Nb) in enumerate(Nb_list)
     cond_OB_KH1 = [cond_S_OB_KH1[Nb][a] for a in a_sample]
     cond_OB_L   = [cond_S_OB_L[Nb][a] for a in a_sample]
     cond_HB     = [cond_S_HB[Nb][a] for a in a_sample]
-    push!(g_cond_HB, Plots.Linear(a_sample, cond_HB, legendentry=latexstring("N_b=$(2Nb)"),
+    push!(g_cond_HB, Plots.Linear(a_sample, cond_HB, legendentry=latexstring("N_b=$(Nb)"),
                                   mark="none", style=style))
-    push!(g_cond_OB_KL2, Plots.Linear(a_sample, cond_OB_KL2, legendentry=latexstring("N_b=$(2Nb)"),
+    push!(g_cond_OB_KL2, Plots.Linear(a_sample, cond_OB_KL2, legendentry=latexstring("N_b=$(Nb)"),
                                       mark="none", style=style))
-    push!(g_cond_OB_KH1, Plots.Linear(a_sample, cond_OB_KH1, legendentry=latexstring("N_b=$(2Nb)"),
+    push!(g_cond_OB_KH1, Plots.Linear(a_sample, cond_OB_KH1, legendentry=latexstring("N_b=$(Nb)"),
                                       mark="none", style=style))
-    push!(g_cond_OB_L, Plots.Linear(a_sample, cond_OB_L, legendentry=latexstring("N_b=$(2Nb)"),
+    push!(g_cond_OB_L, Plots.Linear(a_sample, cond_OB_L, legendentry=latexstring("N_b=$(Nb)"),
                                     mark="none", style=style))
 end
 save("cond_S_HB.pdf", g_cond_HB)
@@ -103,7 +103,7 @@ for Nb in Nb_list
                       mark="none", style="thick, dotted, mygreen"),
          Plots.Linear(a_sample, E_HB.-E, legendentry=latexstring("\\text{HBS}"),
                       mark="none", style="thick, dash dot, myorange")]
-    push!(g, Axis(p, title=latexstring("N_b=$(2Nb)"),
+    push!(g, Axis(p, title=latexstring("N_b=$(Nb)"),
                   xlabel=L"$a$",
                   ylabel=L"\left|E_a - \widetilde{E}_a\right|", ymode="log",
                   legendStyle="at={(0.95,0.95)}, anchor=north east"))
@@ -143,12 +143,12 @@ for Nb in Nb_list
                       mark="none", style="thick, dotted, mygreen"),
          Plots.Linear(a_sample, err_HB, legendentry=latexstring("\\text{HBS}"),
                       mark="none", style="thick, dash dot, myorange")]
-    push!(g, Axis(p, title=latexstring("N_b=$(2Nb)"),
+    push!(g, Axis(p, title=latexstring("N_b=$(Nb)"),
                   xlabel=L"$a$",
                   ymode="log", ylabel=L"\Vert\rho_a - \widetilde\rho_a\Vert_{L^1}",
                   legendStyle="at={(0.95,0.95)}, anchor=north east"))
 
-    save("Nb$(2Nb)_extrapolate_a.pdf", g)
+    save("Nb$(Nb)_extrapolate_a.pdf", g)
 end
 
 # plot functions
@@ -174,7 +174,7 @@ for Nb in Nb_list
         g = Axis(p, title=latexstring("\\mu=$(μ)"),
                  xlabel=L"$x$", xmin=-10, xmax=10,
                  legendStyle="at={(0.05,0.95)}, anchor=north west")
-        save("X_$(μ)_Nb$(2Nb).pdf",g)
+        save("X_$(μ)_Nb$(Nb).pdf",g)
     end
 end
 
