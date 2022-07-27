@@ -1,5 +1,6 @@
 Julia code for the optimization of basis in quantum chemistry on a toy model.
-This code is used in [1] -> [insert arXiv link]
+This code is used in our paper _On basis set optimization in quantum chemistry_,
+available on [arXiv](https://arxiv.org/abs/2207.12190).
 
 
 # Requirements:
@@ -14,7 +15,7 @@ Each section with numerical results is associated with a `.jl` file which runs
 the computations, saves them in the associated folder (in `.json` files)
 and then automatically plots the results in these folders (in `.pdf` files).
 
-To perform the computations, first open the Julia shell with `julia --project` 
+To perform the computations, first open the Julia shell with `julia --project`
 from the location of this repository and then run
 ```
 using Pkg
